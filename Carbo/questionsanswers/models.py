@@ -14,6 +14,13 @@ class Question(models.Model):
     text = models.TextField(
         verbose_name='Text',
     )
+
+    enum = models.CharField(
+        verbose_name='Unique str identifier',
+        max_length=255,
+        unique=True,
+    )
+
     type_answer = models.IntegerField(
         verbose_name='Type Answer',
         max_length=20,
@@ -26,6 +33,9 @@ class Question(models.Model):
         blank=True,
         null=True,
     )
+
+    def __str__(self):
+        return self.enum.__str__() + ':' + self.text.__str__()
 
 
 class Answer(models.Model):
@@ -42,3 +52,12 @@ class Answer(models.Model):
         null=True,
         related_name='+'
     )
+
+    enum = models.TextField(
+        verbose_name='Unique str identifier',
+        max_length=255,
+        unique=True
+    )
+
+    def __str__(self):
+        return self.enum.__str__() + ':' + self.text.__str__()

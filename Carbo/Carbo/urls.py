@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.schemas import get_schema_view
 
 from questionsanswers.views import QuestionCreateView, QuestionListView
 
@@ -22,4 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/questions/create', QuestionCreateView.as_view()),
     path('api/questions/all', QuestionListView.as_view()),
+    path('schema', get_schema_view(
+        title="CarboAPI",
+        description="Api Q/A",
+        version="1.0.0"
+    ), name="openapi-schema")
 ]
