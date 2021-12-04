@@ -35,7 +35,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/questions/create', QuestionCreateView.as_view()),
-    path('api/questions/all', QuestionListView.as_view()),ß
+    path('api/questions/all', QuestionListView.as_view()),
     path('redoc', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
     path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
