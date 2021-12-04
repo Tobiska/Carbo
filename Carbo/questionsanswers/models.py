@@ -23,7 +23,6 @@ class Question(models.Model):
 
     type_answer = models.IntegerField(
         verbose_name='Type Answer',
-        max_length=20,
         choices=ANSWER_TYPES
     )
     next_question = models.ForeignKey(
