@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    restart: always
+    environment:
+      - POSTGRES_DB=carbo
+      - POSTGRES_USER=carbo
+      - POSTGRES_PASSWORD=jnier234omsfnkj2pomfwfre2t
+  web:
+    build: ./
+    command: python manage.py runserver --insecure 0.0.0.0:8080
+    ports:
+      - "8080:8080"
+    environment:
+      - CARBO_DATABASE_NAME=carbo
+      - CARBO_DATABASE_USER=carbo
+      - CARBO_DATABASE_PASSWORD=jnier234omsfnkj2pomfwfre2t
+    depends_on:
+      - db
+    # TODO: python manage.py migrate

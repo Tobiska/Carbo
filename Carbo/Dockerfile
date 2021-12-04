@@ -16,4 +16,4 @@ COPY requirements.txt ./
 
 RUN pip install -r ./requirements.txt
 
-# TODO: python manage.py migrate
+COPY . ./

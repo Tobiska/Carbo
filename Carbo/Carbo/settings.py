@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,13 +20,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*xsp0frzg2wz5b&t=44z*t_#+bae!5n64t5c8g*7i^!wa(!p(r'
+env = environ.Env(
+    # Set casting and default values
+    CARBO_SITE_URL=(str, 'http://localhost:8080'),
+    CARBO_DEBUG=(bool, False),
+    CARBO_SECRET_KEY=(str, '**xsp0frzg2wz5b&t234=4wf424z*t_#+baegdfgd!5n6wa(!p(r'),
+    CARBO_DATABASE_ENGINE=(str, 'django.db.backends.postgresql'),
+    CARBO_DATABASE_HOST=(str, 'db'),
+    CARBO_DATABASE_PORT=(int, 5432),
+    CARBO_DATABASE_NAME=(str, 'postgres'),
+    CARBO_DATABASE_USER=(str, 'postgres'),
+    CARBO_DATABASE_PASSWORD=(str, 'postgres'),
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('CARBO_DEBUG')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('CARBO_SECRET_KEY')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = tuple(env.list('CARBO_ALLOWED_HOSTS', default=['localhost', '127.0.0.1']))
 
 
 # Application definition
@@ -38,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'questionsanswers'
 ]
 
@@ -77,12 +91,12 @@ WSGI_APPLICATION = 'Carbo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': env('CARBO_DATABASE_ENGINE'),
+        'NAME': env('CARBO_DATABASE_NAME'),
+        'USER': env('CARBO_DATABASE_USER'),
+        'PASSWORD': env('CARBO_DATABASE_PASSWORD'),
+        'HOST': env('CARBO_DATABASE_HOST'),
+        'PORT': env('CARBO_DATABASE_PORT'),
     }
 }
 
