@@ -1,27 +1,15 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import viewsets
 
-from .models import Question
+from .models import Question, Answer
 from .serializers import AnswersStoreSerializer
-from .serializers import QuestionListSerializer
+from .serializers import QuestionSerializer
 
 
-# Create your views here.
-
-class QuestionCreateView(APIView):
-    def post(self, request):
-        questions = Question.objects.all()
-        serializer = AnswersStoreSerializer(data=request.data, many=True)
-        if serializer.is_valid():
-            return Response(serializer.data)
-        return Response({
-            'msg': "data is invalid"
-        }, 422)
+class QuestionsViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
 
 
-class QuestionListView(APIView):
-
-    def get(self, request):
-        questions = Question.objects.all()
-        serializer = QuestionListSerializer(questions, many=True)
-        return Response(serializer.data)
+class AnswersViewSet(viewsets.ModelViewSet):
+    queryset = Answer.objects.all()
+    serializer_class = AnswersStoreSerializer

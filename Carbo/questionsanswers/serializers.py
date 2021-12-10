@@ -17,7 +17,7 @@ class AnswersStoreSerializer(serializers.Serializer):
     )
 
 
-class QuestionListSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
     type_answer = serializers.ChoiceField(choices=Question.ANSWER_TYPES, source='get_type_answer_display')
 
