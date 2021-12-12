@@ -13,6 +13,8 @@ class Question(models.Model):
 
     text = models.TextField(
         verbose_name='Text',
+        null=False,
+        blank=False
     )
 
     enum = models.CharField(
@@ -23,7 +25,6 @@ class Question(models.Model):
 
     type_answer = models.IntegerField(
         verbose_name='Type Answer',
-        max_length=20,
         choices=ANSWER_TYPES
     )
     next_question = models.ForeignKey(
@@ -40,9 +41,9 @@ class Question(models.Model):
 
 class Answer(models.Model):
     text = models.TextField()
-    question = models.ForeignKey(Question, on_delete=models.SET_NULL,
-                                 blank=True,
-                                 null=True,
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,
+                                 blank=False,
+                                 null=False,
                                  related_name='answers'
                                  )
     next_question = models.ForeignKey(
